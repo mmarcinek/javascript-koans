@@ -41,6 +41,11 @@ describe("About Applying What We Have Learnt", function() {
 
       /* solve using filter() & all() / any() */
 
+      _.filter(products, function (pizza){
+        if(products.ingredients != "mushrooms" && products.containsNuts === false){
+        productIcanEat.push(products.name);};
+      });
+
       expect(productsICanEat.length).toBe(0);
   });
 
@@ -59,10 +64,12 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
+    var nums = _.range(0,1000);
 
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
+    var sum =  _.chain(nums).filter(function (a){return a % 3 === 0 || a % 5 === 0;}).reduce(function(x,y){return x + y}).value();
+    console.log(sum);
 
-    expect(233168).toBe(FILL_ME_IN);
+    expect(233168).toBe(233168);
   });
 
   /*********************************************************************************/
@@ -75,15 +82,25 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
+    var hasMushrooms = _.chain(products)
+      .map(function (a) {
+      return a.ingredients;})
+      .flatten()
+      .each(function (i){
+         ingredientCount[i] = (ingredientCount[i] || 0) + 1;})
+     .value();
+
+    /* ask for help understanding this one... got answer by hacking code from above */
     /* chain() together map(), flatten() and reduce() */
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
